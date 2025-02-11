@@ -30,6 +30,19 @@ app.get("/users", async (req, res) => {
   }
 });
 
+app.get("/user/add", async (req, res) => {
+  try {
+    const users = await UserModel.create({
+      name: "RJ",
+      age: 25,
+      email: "ritik9628@gmail.com",
+    });
+    res.status(200).send(users);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
 });
