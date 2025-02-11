@@ -1,7 +1,12 @@
 FROM node:alpine3.18
+
+ARG DOCKER_BACKEND_PORT
+
+ENV DOCKER_BACKEND_PORT=$DOCKER_BACKEND_PORT
+
 WORKDIR /app
 COPY package.json ./
 RUN npm install
 COPY . .
-EXPOSE 6000
+EXPOSE $DOCKER_BACKEND_PORT
 CMD [ "npm", "run", "start" ]

@@ -1,6 +1,6 @@
 name: Deploy Node Application
 
-on: 
+on:
   push:
     branches:
       - master
@@ -12,29 +12,29 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
       - name: Login to docker hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}     
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker Image for frontend
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/reactjs-app --build-arg VITE_NODE_ENV='production' --build-arg VITE_API_URL='${{ secrets.VITE_API_URL }}'  ./my-frontend
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/reactjs-app --build-arg VITE_NODE_ENV='production' --build-arg VITE_API_URL='${{ secrets.VITE_API_URL }}:${{secrets.AWS_BACKEND_PORT}}' --build-arg VITE_DOCKER_NGINX_PORT='${{secrets.VITE_DOCKER_NGINX_PORT}}'  ./my-frontend
       - name: Build Docker Image for backend
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/nodejs-app  ./my-backend
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/nodejs-app --build-arg DOCKER_BACKEND_PORT='${{secrets.DOCKER_BACKEND_PORT}}'  ./my-backend
       - name: Publish Frontend Image to docker hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/reactjs-app:latest
       - name: Publish Backend Image to docker hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/nodejs-app:latest 
- 
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/nodejs-app:latest
+
   deploy:
     needs: build
-    runs-on: self-hosted 
+    runs-on: self-hosted
     steps:
       - name: Pull frontend image from docker hub
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/reactjs-app:latest
       - name: Pull backend image from docker hub
-        run: docker pull ${{ secrets.DOCKER_USERNAME }}/nodejs-app:latest 
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/nodejs-app:latest
       - name: Delete frontend old container
         run: docker rm -f reactjs-app-container
       - name: Delete backend old container
-        run: docker rm -f nodejs-app-container 
+        run: docker rm -f nodejs-app-container
       - name: Run Frontend Docker Container
-        run: docker run -d -p 80:80 --name reactjs-app-container ${{ secrets.DOCKER_USERNAME }}/reactjs-app
+        run: docker run -d -p ${{secrets.AWS_FRONTEND_PORT}}:${{secrets.VITE_DOCKER_NGINX_PORT}} --name reactjs-app-container ${{ secrets.DOCKER_USERNAME }}/reactjs-app
       - name: Run Backend Docker Container
-        run: docker run -d -p 5000:6000 --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' ${{ secrets.DOCKER_USERNAME }}/nodejs-app
+        run: docker run -d -p ${{secrets.AWS_BACKEND_PORT}}:${{secrets.DOCKER_BACKEND_PORT}} --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' ${{ secrets.DOCKER_USERNAME }}/nodejs-app
