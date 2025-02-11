@@ -7,7 +7,7 @@ const App = () => {
   
   const fetchBackend = async () => {
     try {
-      const res = await myaxios.get("/data1");
+      const res = await myaxios.get("/");
       console.log(res.data);
       setmybackendData(res.data);
     } catch (e) {
