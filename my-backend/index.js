@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
+import "./db/connecion.js";
 
 dotenv.config();
 
@@ -13,7 +13,9 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).send({ msg: "Hello From Devops Backend." + process.env.MONGO_PASSWORD });
+  res
+    .status(200)
+    .send({ msg: "Hello From Devops Backend." + process.env.MONGO_URL });
 });
 
 app.get("/data1", (req, res) => {
