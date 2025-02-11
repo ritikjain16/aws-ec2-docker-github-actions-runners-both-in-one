@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-const port = process.env.PORT | 6000;
+const port = process.env.DOCKER_BACKEND_PORT | 5000;
 
 const app = express();
 
