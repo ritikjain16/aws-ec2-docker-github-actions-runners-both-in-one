@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 dotenv.config();
 
-const port = process.env.DOCKER_BACKEND_PORT | 4000;
+const port = process.env.DOCKER_BACKEND_PORT | 5000;
 
 const app = express();
 
