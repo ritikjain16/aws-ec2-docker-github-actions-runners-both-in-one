@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).send({ msg: "Hello From Devops Backend." });
+  res.status(200).send({ msg: "Hello From Devops Backend." + process.env.MONGO_PASSWORD });
 });
 
 app.get("/data1", (req, res) => {
