@@ -37,4 +37,4 @@ jobs:
       - name: Run Frontend Docker Container
         run: docker run -d -p 80:80 --name reactjs-app-container ${{ secrets.DOCKER_USERNAME }}/reactjs-app
       - name: Run Backend Docker Container
-        run: docker run -d -p 5000:6000 --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' ${{ secrets.DOCKER_USERNAME }}/nodejs-app
+        run: docker run -d -p 5000:5000 --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' ${{ secrets.DOCKER_USERNAME }}/nodejs-app
