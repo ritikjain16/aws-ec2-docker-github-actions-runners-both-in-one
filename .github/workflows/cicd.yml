@@ -37,4 +37,4 @@ jobs:
       - name: Run Frontend Docker Container
         run: docker run -d -p ${{secrets.AWS_FRONTEND_PORT}}:${{secrets.VITE_DOCKER_NGINX_PORT}} --name reactjs-app-container ${{ secrets.DOCKER_USERNAME }}/reactjs-app
       - name: Run Backend Docker Container
-        run: docker run -d -p ${{secrets.AWS_BACKEND_PORT}}:${{secrets.DOCKER_BACKEND_PORT}} --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' -e AWS_BACKEND_PORT='${{secrets.AWS_BACKEND_PORT}}'  ${{ secrets.DOCKER_USERNAME }}/nodejs-app
+        run: docker run -d -p ${{secrets.AWS_BACKEND_PORT}}:${{secrets.DOCKER_BACKEND_PORT}} --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' ${{ secrets.DOCKER_USERNAME }}/nodejs-app

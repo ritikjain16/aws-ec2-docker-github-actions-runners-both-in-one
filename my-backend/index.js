@@ -3,7 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-const port = process.env.AWS_BACKEND_PORT | 5000;
+dotenv.config();
+
+const port = process.env.DOCKER_BACKEND_PORT | 5000;
 
 const app = express();
 
