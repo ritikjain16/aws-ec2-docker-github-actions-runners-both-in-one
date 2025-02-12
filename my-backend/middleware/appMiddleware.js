@@ -2,7 +2,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-export const mymiddleware = (req, res, next) => {
+export const appMiddleware = (req, res, next) => {
   if (
     req.get("origin") === process.env.FRONTEND) {
     next();
