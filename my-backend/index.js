@@ -33,7 +33,7 @@ app.get("/users", async (req, res) => {
 app.get("/user/add", async (req, res) => {
   try {
     const users = await UserModel.create({
-      name: "RJ",
+      name: "RJ16",
       age: 25,
       email: "ritik9628@gmail.com",
     });
