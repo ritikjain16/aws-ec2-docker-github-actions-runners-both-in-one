@@ -32,7 +32,7 @@ const App = () => {
 
   return (
     <div>
-      App {import.meta.env.VITE_API_URL}
+      App 1{import.meta.env.VITE_API_URL}
       <h1>{mybackendData?.msg}</h1>
       <div>
         {users.map((user) => (
